@@ -87,12 +87,10 @@ sonCongruentes a b n = mod (a - b) n == 0
 
 --CONVERTIR NUMEROS A DISTINTAS BASES
 baseDecimalAOtraBase :: Integer -> Integer -> [Integer] -> [Integer] --AUX
-baseDecimalAOtraBase _ base _ | base > 10 = [0]
 baseDecimalAOtraBase n base res | n < base = (mod n base):res
                             | n >= base = baseDecimalAOtraBase (div n base) base ((mod n base):res)
 
 otraBaseABaseDecimal :: [Integer] -> Integer -> Integer -> Integer --AUX
-otraBaseABaseDecimal _ base _ | base > 10 = 0
 otraBaseABaseDecimal [res] base n = n + res
 otraBaseABaseDecimal (res:restos) base n = otraBaseABaseDecimal restos base ((n + res) * base)
 
