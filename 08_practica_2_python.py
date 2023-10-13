@@ -325,7 +325,7 @@ def filasOrdenadas(m:list[list[int]]) -> list[bool]:
 
 
 #P2_E.5.4
-def elevarMatriz(d:int, p:int) -> list[list[int]]:
+def elevarMatriz(d:int, p:int) -> np.array:
     m:np.array = np.random.randint(1,5, (d, d))
     res:np.array = m.copy()
     print('matriz original:\n', m)
@@ -341,7 +341,7 @@ def elevarMatriz(d:int, p:int) -> list[list[int]]:
         p-=1        
     return res
 
-def productoDeMatrices(m, n):   #AUX
+def productoDeMatrices(m:np.array, n:np.array) -> np.array:   #AUX
     res:np.array = m.copy()
     for i in range(len(m)):
         for j in range(len(m[i])):
