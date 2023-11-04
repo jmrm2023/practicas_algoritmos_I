@@ -380,24 +380,31 @@ def buscar_el_maximo_en_cola_2(c: Cola) -> int:
 
 #16
 def armar_secuencia_de_bingo() -> Cola[int]: #AUX
-    return cola_de_enteros(12, 0, 99)
+    lista_aux: list[int] = list(range(100))
+    random.shuffle(lista_aux)
+    cola_aux: Cola[int] = Cola()
+    for item in lista_aux:
+        cola_aux.put(item)        
+    return cola_aux
 
 def jugar_carton_de_bingo(carton: list[int], bolillero: Cola[int]) -> int:
-    lista_aux: list[int] = copy.deepcopy(carton)
-    cola_aux: Cola = Cola()
+    jugadas_totales: int = 0
+    carton_lleno: int = len(carton)
+    cola_aux: Cola[int] = Cola()
     
     while not bolillero.empty():
         bola: int = bolillero.get()
-        cola_aux.put(bola)
-        try:
-            lista_aux.remove(bola)
-        except:
-            continue
-        
+        cola_aux.put(bola)        
+        if bola in carton:
+            carton_lleno -= 1
+        if carton_lleno > 0:
+            jugadas_totales += 1
+       
     while not cola_aux.empty():
-        bolillero.put(cola_aux.get())
-        
-    return len(lista_aux)
+        bola: int = cola_aux.get()
+        bolillero.put(bola)
+    
+    return jugadas_totales
 
 
 #17
