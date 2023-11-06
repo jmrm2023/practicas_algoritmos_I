@@ -209,3 +209,90 @@ def texto_a_morse(t:str) -> str:
         else:        
             res += f'{morse[c]} '
     return res
+
+
+# E-8 Función que retorna un diccionario con los números entre 1 y n
+# convertidos del sistema decimal al sistema de numeración romano
+def romanos(n:int)->dict[int, str]:
+    d:dict[int, str] = dict()
+    for i in range(n):
+        d[i+1] = a_romano(i+1)
+    return d
+     
+def a_romano(n:int) -> str: #AUX Recursiva
+    res:str = ''
+    if  n > 3999999 or n < 0:
+        res += "Cifra inválida"
+    # Unidades
+    if (n < 10):
+        if n == 4:
+            res += 'IV'
+        elif n == 9:
+            res += 'IX' 
+        else:
+            res += 'V' * (n // 5) + 'I' * (n % 5)
+    # Decenas < 50
+    elif (n >= 10 and n < 50):
+        if (n // 10 == 4):
+            res += 'XL' + a_romano(n % 10)
+        else:
+            res += 'X' * (n // 10) + a_romano(n % 10)
+    # Decenas > 50
+    elif (n >= 50 and n < 100):
+        if (n // 10 == 9):
+            res += 'XC' + a_romano(n % 10)
+        else:
+            res += 'L' * (n // 50) + a_romano(n % 50)
+    # Centenas < 500    
+    elif (n >= 100 and n < 500):
+        if (n // 100 == 4):
+            res += 'CD' + a_romano(n % 100)
+        else:
+            res += 'C' * (n // 100) + a_romano(n % 100)
+    # Centenas > 500    
+    elif (n >= 500 and n < 1000):
+        if (n // 100 == 9):
+            res += 'CM' + a_romano(n % 100)
+        else:
+            res += 'D' * (n // 500) + a_romano(n % 500)
+    # Millares > 5000    
+    elif (n >= 1000 and n < 5000):
+        if (n // 1000 == 4):
+            res += 'ĪV̄' + a_romano(n % 1000)
+        else:
+            res += 'M' * (n // 1000) + a_romano(n % 1000)
+    # Millares < 5000    
+    elif (n >= 5000 and n < 10000):
+        if (n // 1000 == 9):
+            res += 'ĪX̄' + a_romano(n % 1000)
+        else:
+            res += 'V̄' * (n // 5000) + a_romano(n % 5000)
+    # Decenas de millares < 50000    
+    elif (n >= 10000 and n < 50000):
+        if (n // 10000 == 4):
+            res += 'X̄L̄' + a_romano(n % 10000)
+        else:
+            res += 'X̄' * (n // 10000) + a_romano(n % 10000)
+    # Decenas de millares > 50000    
+    elif (n >= 50000 and n < 100000):
+        if (n // 10000 == 9):
+            res += 'X̄C̄' + a_romano(n % 10000)
+        else:
+            res += 'L̄' * (n // 50000) + a_romano(n % 50000)
+    # Centenas de millares < 500000    
+    elif (n >= 100000 and n < 500000):
+        if (n // 100000 == 4):
+            res += 'C̄D̄' + a_romano(n % 100000)
+        else:
+            res += 'C̄' * (n // 100000) + a_romano(n % 100000)
+    # Centenas de millares > 500000    
+    elif (n >= 500000 and n < 1000000):
+        if (n // 100000 == 9):
+            res += 'C̄M̄' + a_romano(n % 100000)
+        else:
+            res += 'D̄' * (n // 500000) + a_romano(n % 500000)
+    # Millones < 4000000    
+    elif (n >= 1000000):
+        res += 'M̄' * (n // 1000000) + a_romano(n % 1000000)     
+    
+    return res   
