@@ -1,4 +1,4 @@
-import math
+import math, pprint
 
 
 
@@ -176,4 +176,36 @@ def bezout(x:int, y:int) -> str:
         lista_aux.append((s, t))
 
     res:str =f'(±{max(abs(s), abs(t))})·{min(x, y)}  ±  ({min(abs(s), abs(t))})·{max(x, y)}  =  {max(par)}'                     
+    return res
+
+
+
+# E-7 Función que convierte una cadena de carcateres a código Morse
+def c_m() -> dict[str, str]: #AUX
+    d:dict[str, str] = dict()
+    l:list[str] = ['.-','-..','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--',
+                   '-.','---','.--.','--.-','.-.','...','-','..-','...-','.--','-..-','-.--','--..']
+    n:list[str] = ['------','.----','..---','...--','....-','.....','-....','--...','---..','----.']
+    
+    x:int = 97
+    for i in range(len(l)):
+        d[chr(x+i)] = l[i]
+    
+    x = 48
+    for i in range(len(n)):
+        d[chr(x+i)] = n[i]
+    
+    return d
+
+def texto_a_morse(t:str) -> str:
+    t = t.lower()
+    res:str = ''
+    morse:dict[str, str] = c_m()
+    for c in t:
+        if c == ' ':
+            res += c*2
+        elif c not in morse.keys():
+            continue
+        else:        
+            res += f'{morse[c]} '
     return res
