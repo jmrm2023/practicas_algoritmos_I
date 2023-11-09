@@ -296,3 +296,59 @@ def a_romano(n:int) -> str: #AUX Recursiva
         res += 'M̄' * (n // 1000000) + a_romano(n % 1000000)     
     
     return res   
+
+
+# NÚMEROS COMPLEJOS  
+    
+# Función que grafica en un plano polar
+# una lista de números complejos dados en forma binomial 
+def graf_polar(c:list[complex], tipo_de_linea='-'):
+    
+    for x in range(len(c)):
+        prueba = str(c[x])
+        prueba = prueba[1:-1]    
+        vector = plt.polar([np.angle(0), np.angle(c[x])],
+                         [np.abs(0), np.abs(c[x])], 
+                         label=f'|{prueba}| = {round(abs(c[x]), 2)}, θ = {round(np.angle(c[x]), 4)} rad', 
+                         linestyle=tipo_de_linea)
+    plt.legend(loc='center right', bbox_to_anchor=(1.30, 0.0), prop={"size":7})
+    plt.savefig('complejo_en_plano_polar')
+    plt.show()
+    
+
+# Función que convierte un complejo de binomial a polar
+def a_polar(z:complex) -> str:
+    a:int = z.real
+    b:int = z.imag
+    r:float = math.sqrt(a**2 + b**2)
+    arg_z = math.acos(a/r)   
+    return f'|{round(r,2)}|·[cos({round(arg_z,7)}) + i·sen({round(arg_z,7)})]' 
+
+# Función que convierte un complejo de polar a binomial
+def a_binomial(modulo:float, argumento:float) -> complex:
+    a:float = round(math.cos(argumento) * modulo, 2)
+    b:float = round(math.sin(argumento) * modulo, 2)
+    return complex(a, b)
+
+
+# Función que halla las raíces enesimas de un complejo
+# dado en forma binomial 
+def n_raices(c:complex, n:int) -> list[complex]:
+    res: list[complex] = []
+    res.append(c)
+    a:int = c.real
+    b:int = c.imag
+    r:float = math.sqrt(a**2 + b**2)
+    arg_c = math.acos(a/r)  
+    
+    # Halla cada raíz
+    for k in range(n):
+        ap: float = (arg_c + (2*k*math.pi)) / n
+        if ap > math.pi*2:
+            ap -= math.pi*2
+        res.append(a_binomial(r**(1/n), ap))
+        
+    # Genera el plano polar con los números como vectores
+    graf_polar(res)
+    
+    return res[1:]
