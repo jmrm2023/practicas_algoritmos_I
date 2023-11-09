@@ -298,6 +298,36 @@ def a_romano(n:int) -> str: #AUX Recursiva
     return res   
 
 
+# Función que retorna la distancia  en kilómetros entre dos puntos 
+# del planeta dados en forma de grados decimales (DD)
+def distancia(lat_a,long_a, lat_b, long_b) -> str:
+    res:float = 0.
+    radio_tierra:float = 6378
+    if lat_a < -90 or lat_a > 90:
+        res = -1.
+    elif long_a < -180 or long_a > 180:
+        res = -1.
+    elif lat_b < -90 or lat_b > 90:
+        res = -1.
+    elif long_b < -180 or long_b > 180:
+        res = -1.
+    else:
+        a_la:float = math.radians(lat_a)
+        a_lo:float = math.radians(long_a)
+        b_la:float = math.radians(lat_b)
+        b_lo:float = math.radians(long_b)
+        d_lat = b_la - a_la
+        d_long = b_lo - a_lo
+        x:float = (math.sin(d_lat/2)**2 + 
+             math.cos(a_la) * 
+             math.cos(b_la) * 
+             math.sin(d_long/2)**2)
+        y:float = 2*math.atan2(math.sqrt(x), math.sqrt(1 - x))     
+        res = radio_tierra * y
+        return f'{round(res, 3)} kilómetros'
+    
+    
+
 # NÚMEROS COMPLEJOS  
     
 # Función que grafica en un plano polar
